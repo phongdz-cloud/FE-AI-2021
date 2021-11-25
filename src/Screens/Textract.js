@@ -26,6 +26,7 @@ var data = {
 
 function Textract() {
   const dispatch = useDispatch();
+  const [type,setType]= useState('DAILY');
   useEffect(() => {
     var sendData = {
       itemLines: [],
@@ -35,7 +36,7 @@ function Textract() {
   }, []);
   var Num = 0;
   var flag = false;
-
+  console.log(type)
   function showPreview(event) {
     if (event.target.files.length > 0) {
       var src = URL.createObjectURL(event.target.files[0]);
@@ -51,15 +52,16 @@ function Textract() {
 
   const submitHandler = (e) => {
     e.preventDefault(); //dispatch login
-    dispatch(uploadImage(image));
+    dispatch(uploadImage(image,type));
   };
   const [image, setImage] = useState();
+  
   const [control, setControl] = useState({
     itemLines: [],
     specialFields: [],
-    type: "DAILY",
+    type: type,
   });
-
+ 
   const { loading, upImage } = useSelector((state) => state.uploadImage);
   const { putImage } = useSelector((state) => state.updateImage);
 
@@ -163,7 +165,7 @@ function Textract() {
         itemLines: data.itemLines,
         specialFields: data.specialFields,
         summaryFields: upImage.summaryFields,
-        type: "DAILY",
+        type: type,
       })
     );
   }
@@ -589,6 +591,11 @@ function Textract() {
                 <div className="form-content">
                   <div className="form-items">
                     <h3>Import a image</h3>
+                  <div>
+                    <select name="type" id="type" onChange={e => setType(e.target.value)}>
+                            <option value="DAILY">DAILY</option>
+                            <option value="MONTHLY">MONTHLY</option>
+                        </select></div>
                     <input
                           
                           type="file"

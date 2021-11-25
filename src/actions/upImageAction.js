@@ -13,7 +13,7 @@ import {
 } from "../constants/uploadImageConstant";
 
 
-export const uploadImage = (image) => async (dispatch,getState) => {
+export const uploadImage = (image,type) => async (dispatch,getState) => {
   try {
   
     dispatch({
@@ -21,7 +21,7 @@ export const uploadImage = (image) => async (dispatch,getState) => {
     });
     const fd = new FormData();
     fd.append("file", image);
-    fd.append("type", "DAILY");
+    fd.append("type", type);
 
    
     const {userLogin:{userInfo}}=getState()
